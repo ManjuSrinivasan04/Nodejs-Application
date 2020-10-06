@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Made Easy Payments | {{ title }}</title>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/styles/app.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://js.stripe.com/v3/"></script>
+		{% if admin %}
+			<link rel="stylesheet" type="text/css" href="/styles/adminView.css">
+		{% else %}
+			<link rel="stylesheet" type="text/css" href="/styles/customerView.css">
+		{% endif %}
+	</head>
+	<body>
+		<div class="app-container">
+			<div class="app-header">
+				<a href="/"><p class="{% if admin %} active {% endif %}">ADMIN VIEW</p></a>
+				<span>|</span>
+				<a href="/customerView"><p class="{% if not admin %} active {% endif %}">CUSTOMER VIEW</p></a>
+			</div>
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>
