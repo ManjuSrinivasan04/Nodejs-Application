@@ -39,6 +39,11 @@ const UserSchema = new mongoose.Schema({
         max: 100
     },
 
+    address:{
+       type:String,
+       required:"Enter your Address"
+    },
+    
     resetPasswordToken: {
         type: String,
         required: false

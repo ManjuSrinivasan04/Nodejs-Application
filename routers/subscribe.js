@@ -4,9 +4,6 @@ const router = express.Router();
 
 const STRIPE_API = require('../api/stripe-functions');
 
-
-
-
 /* Place all routes here */
 router.get('/', (req, res) => {
   STRIPE_API.getAllProductsAndPlans().then(products => {

@@ -9,5 +9,5 @@ module.exports = app => {
     });
 
     app.use('/api/auth', auth);
-    app.use('/api/user', authenticate, user);
+    app.use('/api/user', user);
 };

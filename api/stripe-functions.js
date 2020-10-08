@@ -1,5 +1,4 @@
 /* Server Side -- Stripe API calls */
-
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 const UTILS = require('../utils/format-numbers.js');
