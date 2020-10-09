@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const options = { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true };
 
 // Mongodb connection
-mongoose.connect('mongodb://127.0.0.1:27017/usersdetails', options);
+mongoose.connect('mongodb://127.0.0.1:27017/NodejsApp', options);
 
 // Mongodb connection success
 mongoose.connection.on('connected', function() {

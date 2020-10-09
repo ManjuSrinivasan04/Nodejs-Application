@@ -2,15 +2,22 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const validator = require('validator');
 
 const Token = require('../model/token');
 
 const UserSchema = new mongoose.Schema({
     email: {
-        type: String,
+        type:String,
+        required: true,
         unique: true,
-        required: 'Your email is required',
-        trim: true
+        trim: true,
+        lowercase:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Email is not valid')
+            }
+        }
     },
 
     username: {
@@ -22,9 +29,11 @@ const UserSchema = new mongoose.Schema({
     },
 
     password: {
-        type: String,
-        required: 'Your password is required',
-        max: 100
+        type:String,
+        trim:true,
+        minlength:8,
+        maxlength:15,
+        required: true
     },
 
     firstName: {
@@ -52,9 +61,50 @@ const UserSchema = new mongoose.Schema({
     resetPasswordExpires: {
         type: Date,
         required: false
-    }
-}, {timestamps: true});
+    },
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    },
+    tokens:[{
+        token:{
+            type:String,
+            required: true
+        }
+    }]
+},{timestamps: true});
 
+UserSchema.methods.generateAuthToken = async function(){
+    const user = this
+    const token = await jwt.sign({_id : user._id.toString()}, 'John')
+
+    user.tokens = user.tokens.concat({token})
+    await user.save()
+    return token
+}
+
+UserSchema.statics.findByCredentials = async(email,password)=>{
+    const user = await User.findOne({email})
+    if(!user){
+        throw new Error('given valid email')
+    }
+    const check = await bcrypt.compare(password,user.password)
+    if(!check){
+        throw new Error('wrong password!')
+    }
+    return user
+}
+
+UserSchema.pre('save', async function (next){
+    const user = this 
+    if(user.isModified('password')){
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+    next()
+})
+
+//const User = mongoose.model('userDetails',UserSchema)
+//module.exports = User
 
 UserSchema.pre('save',  function(next) {
     const user = this;

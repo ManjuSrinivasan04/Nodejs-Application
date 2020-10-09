@@ -1,9 +1,7 @@
 const express = require('express')
 require('../db/mongoose')
-const User = require('../models/user')
+const User = require('../model/user')
 const auth = require('../middleware/auth')
-const speakeasy = require('speakeasy')
-const qrcode = require('qrcode')
 
 const router = express.Router()
 
