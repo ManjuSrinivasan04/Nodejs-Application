@@ -7,13 +7,10 @@ const qrcode = require('qrcode')
 
 const router = express.Router()
 
-
 router.post('/createUser',async(req,res)=>{
     const user= new User(req.body)
     try {
-        //const secret = speakeasy.generateSecret({length:20})
-       // console.log(secret)
-       // user.secret2FA = secret.base32
+
        const { email } = req.body;
 
         // Make sure this account doesn't already exist
@@ -62,46 +59,5 @@ router.get('/getAllUser',auth ,async(req,res)=>{
         res.status(500).send(error)
     }
 })
-
-router.get('/qrcode',auth, async(req, res)=>{
-    try {
-        const user = req.user
-        if(user.enable2FA === true){
-                    
-            qrcode.toDataURL('otpauth://totp/SecretKey?secret='+user.secret2FA,(err,data)=>{
-                if(err){
-                    throw Error(err)
-                }
-                res.send(data)
-                console.log(data)
-            })
-        }else{
-            res.send("enable2fa was false check it")
-        }     
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
-
-router.post('/verify2FA',auth,async(req, res)=>{
-    try {
-        const user = req.user
-        console.log(user.secret2FA)
-        
-        let result = speakeasy.totp.verify({
-            secret: user.secret2FA,
-            encoding: 'base32',
-            token: req.body.otp 
-        })
-        console.log(result)
-        if(result === true){
-            return res.send('verified successfully')
-        }else{
-            return res.send('opt wrong')
-        }
-    } catch (error) {
-        res.status(500).send(error)
-    }
-});
 
 module.exports = router;

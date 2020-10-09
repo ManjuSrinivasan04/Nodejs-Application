@@ -22,7 +22,6 @@ app.listen(5000, () => {
     console.log("Listening at :5000...");
 });
 
-
 app.use(express.json())
 app.use(userRouter)
 app.use(subscribeRouter)

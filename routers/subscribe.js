@@ -71,6 +71,8 @@ router.post('/signUp', (req, res) => {
 });
 
 
+//payment processing for the selected product
+
 router.post('/processPayment', (req, res) => {
   var product = {
     name: req.body.productName

@@ -45,7 +45,7 @@ require("./middlewares/jwt")(passport);
 
 
 //=== 4 - CONFIGURE ROUTES
-//Configure Route
+
 require('./routes/index')(app);
 
 

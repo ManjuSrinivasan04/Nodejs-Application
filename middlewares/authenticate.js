@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 
         if (!user) return res.status(401).json({message: "Unauthorized Access - No Token Provided!"});
 
-        //req.user = user;
+        req.user = user;
 
         next();
 

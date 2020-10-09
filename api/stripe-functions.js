@@ -75,7 +75,6 @@ function createCustomerAndSubscription(requestBody) {
   });
 }
 
-
 module.exports = {
   getAllProductsAndPlans,
   createProduct,

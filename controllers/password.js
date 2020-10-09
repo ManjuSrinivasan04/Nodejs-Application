@@ -67,7 +67,7 @@ exports.resetPassword = async (req, res) => {
         //Set the new password
         user.password = req.body.password;
         user.resetPasswordToken = undefined;
-       user.resetPasswordExpires = undefined;
+        user.resetPasswordExpires = undefined;
         user.isVerified = true;
 
         // Save the updated user object

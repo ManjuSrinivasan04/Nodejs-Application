@@ -101,6 +101,8 @@ exports.resendToken = async (req, res) => {
     }
 };
 
+//verfication mail
+
 async function sendVerificationEmail(user, req, res){
     try{
         const token = user.generateVerificationToken();
