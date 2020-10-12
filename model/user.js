@@ -3,8 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const validator = require('validator');
+const dotenv = require('dotenv')
+dotenv.config();
 
-const Token = require('../model/token');
+//const Token = require('../model/token');
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -74,14 +76,29 @@ const UserSchema = new mongoose.Schema({
     }]
 },{timestamps: true});
 
-UserSchema.methods.generateAuthToken = async function(){
+/*UserSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = await jwt.sign({_id : user._id.toString()}, 'John')
 
     user.tokens = user.tokens.concat({token})
     await user.save()
     return token
-}
+}*/
+
+
+
+UserSchema.methods.generateAuthToken = (res, id, firstname) => {
+  const expiration = 604800000;
+  const token = jwt.sign({ id, firstname }, process.env.JWT_SECRET, {
+    expiresIn:'7d',
+  });
+  return res.cookie('token', token, {
+    expires: new Date(Date.now() + expiration),
+    secure: false, // set to true if your using https
+    httpOnly: true,
+  });
+};
+
 
 UserSchema.statics.findByCredentials = async(email,password)=>{
     const user = await User.findOne({email})
