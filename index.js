@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express')
 require('./db/mongoose')
+
 const userRouter= require('./routes/user.route')
 const subscribeRouter=require('./routes/subscribe')
 const bodyParser = require('body-parser');
@@ -71,13 +72,14 @@ app.use(passport.initialize());
 require("./middlewares/jwt")(passport);
 require('./routes/index')(app);
 
+app.use(express.json());
+app.use(userRouter);
+app.use(subscribeRouter);
+
 //PORT
 app.listen(5000, () => {
     console.log("Listening at :5000...");
 });
 
-app.use(express.json())
-app.use(userRouter)
-app.use(subscribeRouter)
 
 

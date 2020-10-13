@@ -2,6 +2,7 @@ const User = require('../model/user');
 const Token = require('../model/token');
 const {sendEmail} = require('../utils/index');
 
+//===register
 // @route POST api/auth/register
 // @desc Register user
 // @access Public
@@ -25,6 +26,7 @@ exports.register = async (req, res) => {
     }
 };
 
+//===login
 // @route POST api/auth/login
 // @desc Login user and return JWT token
 // @access Public

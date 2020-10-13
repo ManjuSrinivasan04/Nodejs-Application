@@ -37,6 +37,7 @@ function getAllProductsAndPlans() {
   });
 }
 
+//create Product 
 
 function createProduct(requestBody) {
   return stripe.products.create({
@@ -45,6 +46,7 @@ function createProduct(requestBody) {
   });
 }
 
+//create plan 
 
 function createPlan(requestBody) {
   return stripe.plans.create({
